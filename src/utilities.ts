@@ -1,4 +1,3 @@
-import e from 'express';
 import { promises as fspromises } from 'fs';
 
 import path from 'path';
@@ -15,7 +14,7 @@ const checkForImage = async (
 		`${imageTitle.toLowerCase()}(${width}x${height}).jpg`
 	);
 	try {
-		await fspromises.open(filePath, 'r');
+		await fspromises.readFile(filePath, { flag: 'r' });
 		return filePath;
 	} catch {
 		return null;
@@ -49,6 +48,7 @@ const convertImage = async (
 			.toFile(outputPath);
 		image.close();
 	} catch {
+		image.close();
 		throw new Error('Unable to convert Image');
 	}
 	return outputPath;

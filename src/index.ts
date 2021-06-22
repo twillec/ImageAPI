@@ -1,10 +1,8 @@
 import express from 'express';
-import path from 'path';
 import { checkForImage, convertImage } from './utilities';
 
 const app = express();
 const port = 3000;
-const imgPath = path.join(__dirname, '../images');
 
 app.listen(port);
 
@@ -28,7 +26,6 @@ app.get('/convert', async (req, res) => {
 		res.sendFile(returnedImage);
 	} else {
 		try {
-			console.log('converting old image');
 			const imagePath = await convertImage(
 				req.query.image as string,
 				parseInt(req.query.height as string),
