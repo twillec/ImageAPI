@@ -8,12 +8,21 @@ const checkForImage = async (
 	height: number,
 	width: number
 ): Promise<string | null> => {
+	const thumbsDir = path.join(__dirname, '../images/thumbs/');
 	const filePath = path.join(
-		__dirname,
-		'../images/thumbs/',
+		thumbsDir,
 		`${imageTitle.toLowerCase()}(${width}x${height}).jpg`
 	);
+
 	try {
+		await fspromises.readdir(thumbsDir);
+	}
+	catch {
+		await fspromises.mkdir(thumbsDir);
+	}
+
+	try {
+		
 		await fspromises.readFile(filePath, { flag: 'r' });
 		return filePath;
 	} catch {
