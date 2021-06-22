@@ -5,8 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "jasmine",
-    "build": "npx prettier --write ./src/**/* && npx eslint ./src/**/* && npx tsc",
-    "start": "nodemon ./dist/index"
+    "build": "npx tsc",
+    "lint": "npx prettier --write ./src/**/* && npx eslint ./src/**/* &&",
+    "dev": "nodemon ./dist/index",
+    "start": "node ./dist/index"
   },
   "repository": {
     "type": "git",
