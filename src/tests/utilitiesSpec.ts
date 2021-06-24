@@ -1,5 +1,5 @@
 import path from 'path';
-import { checkForImage, convertImage } from '../utilities';
+import { checkForImage, convertImage } from '../utilites/imageFunctions';
 
 describe('A suite to test finding a cached image', () => {
 	beforeAll(async () => {
