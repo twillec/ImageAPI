@@ -1,8 +1,8 @@
-import { checkForImage, convertImage } from '../utilities';
+import { checkForImage, convertImage } from '../utilites/imageFunctions';
 import express from 'express';
 const route = express.Router();
 
-route.get('/', async (req, res) => {
+route.get('/', async (req: express.Request, res: express.Response): Promise<unknown> => {
 	if (!req.query.image || !req.query.width || !req.query.height) {
 		res.statusCode = 400;
 		return res.send(
@@ -18,10 +18,16 @@ route.get('/', async (req, res) => {
 		res.sendFile(returnedImage);
 	} else {
 		try {
+			const height = parseInt(req.query.height as string);
+			const width = parseInt(req.query.width as string);
+			if(isNaN(height) || isNaN(width)) {
+				res.statusCode = 400;
+				return res.send('There was an error with the width or height values. Please double check your input and try again.');
+			}
 			const imagePath = await convertImage(
 				req.query.image as string,
-				parseInt(req.query.height as string),
-				parseInt(req.query.width as string)
+				height,
+				width
 			);
 			res.sendFile(imagePath);
 		} catch (e) {
